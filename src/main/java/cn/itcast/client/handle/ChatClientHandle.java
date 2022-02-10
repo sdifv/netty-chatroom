@@ -1,4 +1,4 @@
-package cn.itcast.handle;
+package cn.itcast.client.handle;
 
 import cn.itcast.message.*;
 import io.netty.channel.ChannelHandler;
@@ -98,6 +98,7 @@ public class ChatClientHandle extends ChannelInboundHandlerAdapter {
                 .append("gsend [group name] [content]\n")
                 .append("gcreate [group name] [m1,m2,m3...]\n")
                 .append("gmembers [group name]\n")
+                .append("gjoin [group name]\n")
                 .append("gquit [group name]\n")
                 .append("quit\n")
                 .append("==================================");

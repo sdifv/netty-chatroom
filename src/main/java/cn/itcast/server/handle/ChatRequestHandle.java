@@ -1,4 +1,4 @@
-package cn.itcast.handle;
+package cn.itcast.server.handle;
 
 import cn.itcast.message.ChatRequestMessage;
 import cn.itcast.message.ChatResponseMessage;

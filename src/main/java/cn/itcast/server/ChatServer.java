@@ -1,7 +1,9 @@
 package cn.itcast.server;
 
-import cn.itcast.handle.ChatRequestHandle;
-import cn.itcast.handle.LoginRequestHandle;
+import cn.itcast.server.handle.ChatQuitHandle;
+import cn.itcast.server.handle.ChatRequestHandle;
+import cn.itcast.server.handle.GroupChatRequestHandle;
+import cn.itcast.server.handle.LoginRequestHandle;
 import cn.itcast.protocol.MessageCodecSharable;
 import cn.itcast.protocol.ProcotolFrameDecoder;
 import io.netty.bootstrap.ServerBootstrap;
@@ -10,7 +12,6 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,8 @@ public class ChatServer {
         MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();
         LoginRequestHandle LOGIN_HANDLE = new LoginRequestHandle();
         ChatRequestHandle CHAT_HANDLE = new ChatRequestHandle();
+        GroupChatRequestHandle GROUP_CHAT_HANDLE = new GroupChatRequestHandle();
+        ChatQuitHandle QUIT_HANDLE = new ChatQuitHandle();
 
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
@@ -37,6 +40,8 @@ public class ChatServer {
                     ch.pipeline().addLast(MESSAGE_CODEC);
                     ch.pipeline().addLast(LOGIN_HANDLE);
                     ch.pipeline().addLast(CHAT_HANDLE);
+                    ch.pipeline().addLast(GROUP_CHAT_HANDLE);
+                    ch.pipeline().addLast(QUIT_HANDLE);
                 }
             });
             Channel channel = serverBootstrap.bind(8080).sync().channel();
